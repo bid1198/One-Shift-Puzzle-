@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Shift Puzzle</title>
+    <!--
+MIT License
+
+Copyright ©2024 | Bangkit I. D.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; 
+            height: 100vh;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+
+        h1 {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px; 
+        }
+
+        .puzzle-container {
+            background-color: white;
+            display: grid;
+            gap: 3px;
+            max-width: 90vw;
+            max-height: 90vh;
+            aspect-ratio: 1;
+            border: 3px solid black; 
+            box-sizing: border-box; 
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            width: 100%;
+            height: 100%;
+        }
+
+        .cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            font-size: calc(1em + 1vw);
+            cursor: pointer;
+            box-sizing: border-box; 
+        }
+
+        .cell.black {
+            color: black;
+        }
+
+        .cell.red {
+            color: red;
+        }
+
+        .cell.blue {
+            color: blue;
+        }
+
+        .empty {
+            background-color: red;
+            border: 1px solid red;
+            cursor: default;
+        }
+
+        .info-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .close-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>	
+    <h1>One Shift Puzzle</h1> 
+    <button class="info-button">?</button>
+    <div class="puzzle-container">
+        <div class="grid">
+            
+        </div>
+    </div>
+
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <p>Program ini dikembangkan sebagai bentuk <i>penghidupan</i> atas puisi eksperimental yang berjudul One Shift Puzzle, karya Shiny Ane El'poesya, yang diterbitkan dalam bukunya “Sains Puisi”.</p>
+            <button class="close-button">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        const grid = document.querySelector('.grid');
+        const initialState = [
+            ['Cintaku', '', 'di', 'pulau'],
+            ['manis', 'jauh', 'yang', 'air'],
+            ['Gadis', 'sendiri', 'iseng', 'Di'],
+            ['angin', 'tenang', 'mendayu', 'di']
+        ];
+
+        let emptyPosition = { row: 0, col: 1 };
+
+        function createCell(text, colorClass) {
+            const cell = document.createElement('div');
+            cell.className = `cell ${colorClass}`;
+            cell.textContent = text;
+            cell.dataset.text = text;
+            return cell;
+        }
+
+        function initializeGrid() {
+            grid.innerHTML = '';
+            emptyPosition = { row: 0, col: 1 }; 
+
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    const cellText = initialState[row][col];
+                    const colorClass = getColorClass(cellText);
+                    const cell = createCell(cellText, colorClass);
+
+                    cell.addEventListener('click', () => handleCellClick(row, col));
+                    grid.appendChild(cell);
+                }
+            }
+            grid.children[emptyPosition.row * 4 + emptyPosition.col].classList.add('empty');
+        }
+
+        function getColorClass(text) {
+            switch (text) {
+                case 'di':
+                case 'Di':
+                case 'mendayu':
+                case 'Cintaku':
+                    return 'red';
+                case 'pulau':
+                case 'manis':
+                case 'jauh':
+                case 'air':
+                case 'sendiri':
+                    return 'blue';
+                default:
+                    return 'black';
+            }
+        }
+
+        function handleCellClick(row, col) {
+            const emptyRow = emptyPosition.row;
+            const emptyCol = emptyPosition.col;
+
+            if ((Math.abs(row - emptyRow) === 1 && col === emptyCol) || 
+                (Math.abs(col - emptyCol) === 1 && row === emptyRow)) {
+
+                const clickedCellIndex = row * 4 + col;
+                const emptyCellIndex = emptyRow * 4 + emptyCol;
+
+                grid.children[emptyCellIndex].textContent = grid.children[clickedCellIndex].textContent;
+                grid.children[emptyCellIndex].className = `cell ${getColorClass(grid.children[clickedCellIndex].textContent)}`;
+                grid.children[clickedCellIndex].textContent = '';
+                grid.children[clickedCellIndex].className = 'cell empty';
+
+                emptyPosition = { row, col }; 
+            }
+        }
+
+        document.querySelector('.info-button').addEventListener('click', () => {
+            document.getElementById('infoModal').style.display = 'flex';
+        });
+
+        document.querySelector('.close-button').addEventListener('click', () => {
+            document.getElementById('infoModal').style.display = 'none';
+        });
+
+        initializeGrid();
+    </script>
+</body>
+</html>
