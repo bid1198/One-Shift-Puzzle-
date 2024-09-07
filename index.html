@@ -138,9 +138,10 @@ SOFTWARE.
             color: blue;
         }
 
-        .empty {
-            background-color: #ff6b6b;
-            border: 1px solid #ff6b6b;
+        .cell.empty {
+    background-color: rgba(255, 0, 0, 0.5); 
+    border: 1px solid rgba(255, 0, 0, 0.7); 
+    opacity: 0.8; 
             cursor: default;
         }
 
@@ -192,7 +193,25 @@ SOFTWARE.
             margin-top: 10px;
             border-radius: 4px;
         }
-    </style>
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    font-size: calc(1em + 1vw);
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* 3D shadow */
+    background: linear-gradient(145deg, #e0e0e0, #ffffff); /* 3D light effect */
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+.cell:active {
+    box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+</style>
 </head>
 <body>	
     <h1>One Shift Puzzle</h1> 
@@ -209,10 +228,10 @@ SOFTWARE.
             <p>Program ini dikembangkan sebagai bentuk <i>penghidupan</i> atas puisi eksperimental yang berjudul One Shift Puzzle, karya Shiny Ane El'poesya, yang diterbitkan dalam bukunya “Sains Puisi”.</p>
             <button class="close-button">Tutup</button>
         </div>
-    </div>
+    </div>   
     
     <div id="success-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background-color: #fff; border: 2px solid #4a90e2; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
-    <p>Well done! Nampaknya Anda mengenali baik dunia puisi :)<br>Sekarang, izinkan kami bercerita lebih banyak tentang proyek <a href="https://www.facebook.com/share/p/tzpE4cY5uHUS7ePQ/?mibextid=WaXdOe">One Shift Puzzle</a>.</p>
+    <h2>Well done!</h2><p>Izinkan kami bercerita lebih banyak tentang proyek <a href="https://www.facebook.com/share/p/tzpE4cY5uHUS7ePQ/?mibextid=WaXdOe">One Shift Puzzle</a>.</p>
     <button onclick="closeModal()">OK</button>
 </div>
 
@@ -285,7 +304,11 @@ function playClickSound() {
     playSound(500, 'square', 0.1); 
 }
 
+
 function playPopSound() {
+    playSound(600, 'triangle', 0.1); 
+}
+ {
     playSound(800, 'triangle', 0.15); 
 }
 
@@ -401,5 +424,6 @@ document.querySelector('.close-button').addEventListener('touchstart', () => {
 
 initializeGrid();
 </script>
+
 </body>
 </html>
