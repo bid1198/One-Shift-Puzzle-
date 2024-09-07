@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One Shift Puzzle</title>
-    <!--
+        <!--
 MIT License
 
 Copyright ©2024 | Bangkit I. D
@@ -26,86 +26,53 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
--->
+--> 
     <style>
-    	body {
-    background: linear-gradient(270deg, #dcdcdc, #eaeaea);
-    background-size: 400% 400%;
-    animation: backgroundMove 10s ease infinite;
-}
-
-@keyframes backgroundMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.particle {
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    animation: particleMove 10s linear infinite;
-}
-
-@keyframes particleMove {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-100vh); opacity: 0; }
-}
-
-.cell {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.cell:active {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.cell.moving {
-    transform: scale(1.05);
-}
-
-.puzzle-container {
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
         body {
+            background: linear-gradient(270deg, #000000, #555555, #ffffff);
+            background-size: 400% 400%;
+            animation: backgroundMove 10s ease infinite;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column; 
+            flex-direction: column;
             height: 100vh;
-            background-color: #dcdcdc;
             position: relative;
         }
-
-        h1 {
-            color: #ff6b6b;
-            text-align: center;
-            margin-bottom: 15px; 
+        @keyframes backgroundMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        p.subtitle {
-            text-align: center;
-            font-size: 1em;
-            margin-bottom: 20px;
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.7); 
+            border-radius: 50%;
+            animation: particleMove 10s linear infinite;
+        }
+
+        @keyframes particleMove {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
         }
 
         .puzzle-container {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             display: grid;
             gap: 3px;
             max-width: 90vw;
             max-height: 90vh;
             aspect-ratio: 1;
-            border: 3px solid black; 
-            box-sizing: border-box; 
+            border: 3px solid black;
+            box-sizing: border-box;
         }
 
         .grid {
@@ -123,25 +90,33 @@ SOFTWARE.
             border: 1px solid #ddd;
             font-size: calc(1em + 1vw);
             cursor: pointer;
-            box-sizing: border-box; 
+            box-sizing: border-box;
+            background: linear-gradient(145deg, #f2f2f2, #e0e0e0);
+            border-radius: 5px;
+            transition: all 0.3s ease;
         }
 
-        .cell.black {
-            color: black;
+        .cell:active {
+            box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
         }
 
         .cell.red {
-            color: #ff6b6b;
+            color: #ff6b6b; 
         }
 
         .cell.blue {
-            color: blue;
+            color: #3498db; 
+        }
+
+        .cell.black {
+            color: #2c3e50; 
         }
 
         .cell.empty {
-    background-color: rgba(255, 0, 0, 0.5); 
-    border: 1px solid rgba(255, 0, 0, 0.7); 
-    opacity: 0.8; 
+            background-color: rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.7);
+            opacity: 0.8;
             cursor: default;
         }
 
@@ -181,46 +156,72 @@ SOFTWARE.
             max-width: 90%;
             max-height: 80%;
             overflow-y: auto;
-            text-align: left;
         }
 
-        .close-button {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            margin-top: 10px;
-            border-radius: 4px;
+        @media only screen and (max-width: 600px) {
+            body {
+                font-size: 14px;
+            }
+
+            .cell {
+                font-size: calc(1em + 2vw);
+            }
+
+            .puzzle-container {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
         }
-
-.cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd;
-    font-size: calc(1em + 1vw);
-    cursor: pointer;
-    box-sizing: border-box;
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2); /* 3D shadow */
-    background: linear-gradient(145deg, #e0e0e0, #ffffff); /* 3D light effect */
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-.cell:active {
-    box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
+        
+        .correct {
+    box-shadow: 0 0 15px 5px rgba(255, 223, 0, 0.8);
+    transition: box-shadow 0.5s ease-in-out;
 }
 
-</style>
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+.poetry-line {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid;
+    width: 100%;
+    font-family: 'Courier New', Courier, monospace;
+    animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+.floating-word {
+    position: absolute;
+    font-size: 2em;
+    opacity: 0.7;
+    color: rgba(255, 255, 255, 0.8);
+    animation: floatWord 4s ease-in-out forwards;
+}
+
+@keyframes floatWord {
+    0% {
+        transform: translateX(-100vw);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100vw);
+        opacity: 0;
+    }
+}
+    </style>
 </head>
-<body>	
-    <h1>One Shift Puzzle</h1> 
+<body>
+    <h1>One Shift Puzzle</h1>
     <p class="subtitle">(#PUZZLE #POETIC #sainspuisi <del>manuscript</del> javascript)</p>
     <button class="info-button">?</button>
+<div id="floatingWordContainer"></div>
+
     <div class="puzzle-container">
-        <div class="grid">
-            
-        </div>
+        <div class="grid"></div>
     </div>
 
     <div class="modal" id="infoModal">
@@ -228,202 +229,185 @@ SOFTWARE.
             <p>Program ini dikembangkan sebagai bentuk <i>penghidupan</i> atas puisi eksperimental yang berjudul One Shift Puzzle, karya Shiny Ane El'poesya, yang diterbitkan dalam bukunya “Sains Puisi”.</p>
             <button class="close-button">Tutup</button>
         </div>
-    </div>   
-    
-    <div id="success-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background-color: #fff; border: 2px solid #4a90e2; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);">
-    <h2>Well done!</h2><p>Izinkan kami bercerita lebih banyak tentang proyek <a href="https://www.facebook.com/share/p/tzpE4cY5uHUS7ePQ/?mibextid=WaXdOe">One Shift Puzzle</a>.</p>
-    <button onclick="closeModal()">OK</button>
-</div>
+    </div>
+<div class="poetry-line" id="poetryLine"></div>
 
-<script>
-function showSuccessModal() {
-    document.getElementById('success-modal').style.display = 'block';
+    <div id="success-modal" style="display: none;">
+        <h2>Well done!</h2>
+        <p>Izinkan kami bercerita lebih banyak tentang proyek <a href="https://www.facebook.com/share/p/tzpE4cY5uHUS7ePQ/?mibextid=WaXdOe">One Shift Puzzle</a>.</p>
+        <button onclick="closeModal()">×</button>
+    </div>
+    <script>
+    	function showFloatingWord(word) {
+    const floatingWordContainer = document.getElementById('floatingWordContainer');
+    const floatingWord = document.createElement('div');
+    floatingWord.className = 'floating-word';
+    floatingWord.textContent = word;
+    floatingWordContainer.appendChild(floatingWord);
+
+    setTimeout(() => {
+        floatingWord.remove();
+    }, 4000); 
 }
-
-function closeModal() {
-    document.getElementById('success-modal').style.display = 'none';
+    	function updatePoetryLine(text) {
+    const poetryLine = document.getElementById('poetryLine');
+    poetryLine.innerText = text;
 }
-
-function checkSuccess() {
-    const correctOrder = [
-        "Cintaku jauh di pulau", 
-        "Gadis manis iseng sendiri", 
-        "Di air yang tenang", 
-        "di angin mendayu empty", 
-        "empty"
-    ];
-
-    const cells = document.querySelectorAll('.cell');
-    let puzzleWords = [];
-
-    cells.forEach(cell => {
-        puzzleWords.push(cell.innerText.trim() || "empty"); 
-    });
-
-    const currentPhrases = [
-        puzzleWords.slice(0, 4).join(' '),  
-        puzzleWords.slice(4, 8).join(' '),  
-        puzzleWords.slice(8, 12).join(' '), 
-        puzzleWords.slice(12, 16).join(' ') 
-    ];
-
-    if (JSON.stringify(currentPhrases) === JSON.stringify(correctOrder.slice(0, 4)) && puzzleWords[15] === "empty") {
-        console.log('Puzzle solved!'); 
-        showSuccessModal(); 
-    } else {
-        console.log('Puzzle not solved yet'); 
-    }
-}
-
-for (let i = 0; i < 50; i++) {
-    let particle = document.createElement('div');
-    particle.classList.add('particle');
-    particle.style.left = Math.random() * 100 + 'vw';
-    particle.style.animationDuration = Math.random() * 10 + 5 + 's';
-    document.body.appendChild(particle);
-}
-
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-function playSound(frequency, type = 'sine', duration = 0.2) {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    oscillator.type = type;
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); 
-
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + duration);
-}
-
-function playClickSound() {
-    playSound(500, 'square', 0.1); 
-}
-
-
-function playPopSound() {
-    playSound(600, 'triangle', 0.1); 
-}
- {
-    playSound(800, 'triangle', 0.15); 
-}
-
-const grid = document.querySelector('.grid');
-const initialState = [
-    { text: 'Cintaku', color: 'black' },
-    { text: '', color: 'black' },
-    { text: 'di', color: 'red' },
-    { text: 'pulau', color: 'blue' },
-    { text: 'manis', color: 'blue' },
-    { text: 'jauh', color: 'blue' },
-    { text: 'yang', color: 'red' },
-    { text: 'air', color: 'blue' },
-    { text: 'Gadis', color: 'red' },
-    { text: 'sendiri', color: 'blue' },
-    { text: 'iseng', color: 'black' },
-    { text: 'Di', color: 'red' },
-    { text: 'angin', color: 'black' },
-    { text: 'tenang', color: 'black' },
-    { text: 'mendayu', color: 'red' },
-    { text: 'di', color: 'black' }
-];
-
-let emptyPosition = { row: 0, col: 1 };
-
-function createCell(cellData) {
-    const cell = document.createElement('div');
-    cell.className = `cell ${cellData.color}`;
-    cell.textContent = cellData.text;
-    return cell;
-}
-
-function initializeGrid() {
-    grid.innerHTML = '';
-    emptyPosition = { row: 0, col: 1 }; 
-
-    for (let row = 0; row < 4; row++) {
-        for (let col = 0; col < 4; col++) {
-            const cellData = initialState[row * 4 + col];
-            const cell = createCell(cellData);
-
-            cell.addEventListener('touchstart', () => handleCellClick(row, col));
-            grid.appendChild(cell);
+        function showSuccessModal() {
+            document.getElementById('success-modal').style.display = 'block';
         }
-    }
-    grid.children[emptyPosition.row * 4 + emptyPosition.col].classList.add('empty');
-}
 
-let touchStartX, touchStartY;
-
-function handleTouchStart(event, row, col) {
-    touchStartX = event.touches[0].clientX;
-    touchStartY = event.touches[0].clientY;
-}
-
-function handleTouchEnd(event, row, col) {
-    const touchEndX = event.changedTouches[0].clientX;
-    const touchEndY = event.changedTouches[0].clientY;
-    const diffX = touchEndX - touchStartX;
-    const diffY = touchEndY - touchStartY;
-
-    if (Math.abs(diffX) > Math.abs(diffY)) {
-        if (diffX > 30 && col > 0 && grid.children[row * 4 + (col - 1)].classList.contains('empty')) {
-            handleCellClick(row, col - 1); 
-        } else if (diffX < -30 && col < 3 && grid.children[row * 4 + (col + 1)].classList.contains('empty')) {
-            handleCellClick(row, col + 1); 
+        function closeModal() {
+            document.getElementById('success-modal').style.display = 'none';
         }
-    } else {
-        if (diffY > 30 && row > 0 && grid.children[(row - 1) * 4 + col].classList.contains('empty')) {
-            handleCellClick(row - 1, col); 
-        } else if (diffY < -30 && row < 3 && grid.children[(row + 1) * 4 + col].classList.contains('empty')) {
-            handleCellClick(row + 1, col); 
+
+        function checkSuccess() {
+            const correctOrder = [
+                "Cintaku jauh di pulau",
+                "Gadis manis iseng sendiri",
+                "Di air yang tenang",
+                "di angin mendayu empty",
+                "empty"
+            ];
+
+            const cells = document.querySelectorAll('.cell');
+            let puzzleWords = [];
+
+            cells.forEach(cell => {
+                puzzleWords.push(cell.innerText.trim() || "empty");
+            });
+
+            const currentPhrases = [
+                puzzleWords.slice(0, 4).join(' '),
+                puzzleWords.slice(4, 8).join(' '),
+                puzzleWords.slice(8, 12).join(' '),
+                puzzleWords.slice(12, 16).join(' ')
+            ];
+
+            if (JSON.stringify(currentPhrases) === JSON.stringify(correctOrder.slice(0, 4)) && puzzleWords[15] === "empty") {
+                console.log('Puzzle solved!');
+                showSuccessModal();
+            } else {
+                console.log('Puzzle not solved yet');
+            }
         }
-    }
-}
 
-function handleCellClick(row, col) {
-    const emptyRow = emptyPosition.row;
-    const emptyCol = emptyPosition.col;
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-    if ((Math.abs(row - emptyRow) === 1 && col === emptyCol) || 
-        (Math.abs(col - emptyCol) === 1 && row === emptyRow)) {
+        function playSound(frequency, type = 'sine', duration = 0.2) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
 
-        const clickedCellIndex = row * 4 + col;
-        const emptyCellIndex = emptyRow * 4 + emptyCol;
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
 
-        const tempText = grid.children[emptyCellIndex].textContent;
-        const tempClass = grid.children[emptyCellIndex].className;
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
 
-        grid.children[emptyCellIndex].textContent = grid.children[clickedCellIndex].textContent;
-        grid.children[emptyCellIndex].className = grid.children[clickedCellIndex].className;
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
+        }
 
-        grid.children[clickedCellIndex].textContent = tempText;
-        grid.children[clickedCellIndex].className = tempClass;
+        function playClickSound() {
+            playSound(500, 'square', 0.1);
+        }
 
-        emptyPosition = { row, col };
+        function playPopSound() {
+            playSound(600, 'triangle', 0.1);
+        }
 
-        playPopSound(); 
-    } else {
-        console.log('Invalid move: clicked cell is not adjacent to the empty cell');
-    }
-    
-    checkSuccess(); 
-}
+        for (let i = 0; i < 50; i++) {
+            let particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = Math.random() * 10 + 5 + 's';
+            document.body.appendChild(particle);
+        }
 
-document.querySelector('.info-button').addEventListener('touchstart', () => {
-    document.getElementById('infoModal').style.display = 'flex';
-});
+        const grid = document.querySelector('.grid');
+        const initialState = [
+            { text: 'Cintaku', color: 'black' },
+            { text: '', color: 'black' },
+            { text: 'di', color: 'red' },
+            { text: 'pulau', color: 'blue' },
+            { text: 'manis', color: 'blue' },
+            { text: 'jauh', color: 'blue' },
+            { text: 'yang', color: 'red' },
+            { text: 'air', color: 'blue' },
+            { text: 'Gadis', color: 'red' },
+            { text: 'sendiri', color: 'blue' },
+            { text: 'iseng', color: 'black' },
+            { text: 'Di', color: 'red' },
+            { text: 'angin', color: 'black' },
+            { text: 'tenang', color: 'black' },
+            { text: 'mendayu', color: 'red' },
+            { text: 'di', color: 'black' }
+        ];
 
-document.querySelector('.close-button').addEventListener('touchstart', () => {
-    document.getElementById('infoModal').style.display = 'none';
-});
+        let emptyPosition = { row: 0, col: 1 };
 
-initializeGrid();
-</script>
+        function createCell(cellData) {
+            const cell = document.createElement('div');
+            cell.className = `cell ${cellData.color}`;
+            cell.textContent = cellData.text;
+            return cell;
+        }
 
+        function initializeGrid() {
+            grid.innerHTML = '';
+            emptyPosition = { row: 0, col: 1 };
+
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    const cellData = initialState[row * 4 + col];
+                    const cell = createCell(cellData);
+
+                    cell.addEventListener('touchstart', () => handleCellClick(row, col));
+                    grid.appendChild(cell);
+                }
+            }
+            grid.children[emptyPosition.row * 4 + emptyPosition.col].classList.add('empty');
+        }
+
+        function handleCellClick(row, col) {
+            const emptyRow = emptyPosition.row;
+            const emptyCol = emptyPosition.col;
+
+            if ((Math.abs(row - emptyRow) === 1 && col === emptyCol) ||
+                (Math.abs(col - emptyCol) === 1 && row === emptyRow)) {
+
+                const clickedCellIndex = row * 4 + col;
+                const emptyCellIndex = emptyRow * 4 + emptyCol;
+
+                const tempText = grid.children[emptyCellIndex].textContent;
+                const tempClass = grid.children[emptyCellIndex].className;
+
+                grid.children[emptyCellIndex].textContent = grid.children[clickedCellIndex].textContent;
+                grid.children[emptyCellIndex].className = grid.children[clickedCellIndex].className;
+
+                grid.children[clickedCellIndex].textContent = tempText;
+                grid.children[clickedCellIndex].className = tempClass;
+
+                emptyPosition = { row, col };
+
+                playPopSound();
+            } else {
+                console.log('Invalid move: clicked cell is not adjacent to the empty cell');
+            }
+
+            checkSuccess();
+        }
+
+        document.querySelector('.info-button').addEventListener('touchstart', () => {
+            document.getElementById('infoModal').style.display = 'flex';
+        });
+
+        document.querySelector('.close-button').addEventListener('touchstart', () => {
+            document.getElementById('infoModal').style.display = 'none';
+        });
+
+        initializeGrid();
+    </script>
 </body>
 </html>
