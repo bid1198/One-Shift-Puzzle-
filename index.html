@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One Shift Puzzle</title>
-        <!--
+    <!--
 MIT License
 
 Copyright ©2024 | Bangkit I. D
@@ -26,22 +26,41 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
---> 
+-->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Abril+Fatface&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(270deg, #000000, #555555, #ffffff);
+            background: linear-gradient(270deg, #f5d6a1, #e2b07e, #f5d6a1); 
             background-size: 400% 400%;
             animation: backgroundMove 10s ease infinite;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Abril Fatface', serif; 
+            font-size: 1em;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             height: 100vh;
             position: relative;
-        }
+            overflow: hidden;
+        }        
+        
+        h1 {
+    font-family: 'Cinzel', serif; 
+    font-size: 2.5em; 
+    margin: 0;
+    padding: 0;
+    color: #333; 
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif; 
+    font-size: 0.9em; 
+    color: #666; 
+    text-align: center;
+}
+
         @keyframes backgroundMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -52,13 +71,13 @@ SOFTWARE.
             position: absolute;
             width: 5px;
             height: 5px;
-            background-color: rgba(255, 255, 255, 0.7); 
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 50%;
             animation: particleMove 10s linear infinite;
         }
 
         @keyframes particleMove {
-            0% { transform: translateY(0); opacity: 1; }
+            0% { transform: translateY(0); opacity: 0.8; }
             100% { transform: translateY(-100vh); opacity: 0; }
         }
 
@@ -73,6 +92,7 @@ SOFTWARE.
             aspect-ratio: 1;
             border: 3px solid black;
             box-sizing: border-box;
+            position: relative;
         }
 
         .grid {
@@ -94,6 +114,7 @@ SOFTWARE.
             background: linear-gradient(145deg, #f2f2f2, #e0e0e0);
             border-radius: 5px;
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8); 
         }
 
         .cell:active {
@@ -102,21 +123,21 @@ SOFTWARE.
         }
 
         .cell.red {
-            color: #ff6b6b; 
+            color: #ff6b6b;
         }
 
         .cell.blue {
-            color: #3498db; 
+            color: #3498db;
         }
 
         .cell.black {
-            color: #2c3e50; 
+            color: #2c3e50;
         }
 
         .cell.empty {
-            background-color: rgba(255, 0, 0, 0.5);
-            border: 1px solid rgba(255, 0, 0, 0.7);
-            opacity: 0.8;
+            background-color: rgba(255, 255, 255, 0.3); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            opacity: 0.6;
             cursor: default;
         }
 
@@ -147,6 +168,7 @@ SOFTWARE.
             background-color: rgba(255, 255, 255, 0.8);
             justify-content: center;
             align-items: center;
+            font-family: 'Playfair Display', serif; 
         }
 
         .modal-content {
@@ -156,7 +178,15 @@ SOFTWARE.
             max-width: 90%;
             max-height: 80%;
             overflow-y: auto;
+            font-family: 'Playfair Display', serif; 
         }
+        
+        modal-content h2 {
+        	font-family: 'Cinzel', serif;
+        }
+       p {
+        font-family: 'Playfair Display', serif; 
+       }
 
         @media only screen and (max-width: 600px) {
             body {
@@ -172,46 +202,47 @@ SOFTWARE.
                 max-height: 95vh;
             }
         }
-        
+
         .correct {
-    box-shadow: 0 0 15px 5px rgba(255, 223, 0, 0.8);
-    transition: box-shadow 0.5s ease-in-out;
-}
+            box-shadow: 0 0 15px 5px rgba(255, 223, 0, 0.8);
+            transition: box-shadow 0.5s ease-in-out;
+        }
 
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
-}
-.poetry-line {
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid;
-    width: 100%;
-    font-family: 'Courier New', Courier, monospace;
-    animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
-}
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
 
-.floating-word {
-    position: absolute;
-    font-size: 2em;
-    opacity: 0.7;
-    color: rgba(255, 255, 255, 0.8);
-    animation: floatWord 4s ease-in-out forwards;
-}
+        .poetry-line {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid;
+            width: 100%;
+            font-family: 'Cinzel', serif;
+            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
 
-@keyframes floatWord {
-    0% {
-        transform: translateX(-100vw);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100vw);
-        opacity: 0;
-    }
-}
+        .floating-word {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.7;
+            color: rgba(255, 255, 255, 0.8);
+            animation: floatWord 4s ease-in-out forwards;
+        }
+
+        @keyframes floatWord {
+            0% {
+                transform: translateX(-100vw);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
