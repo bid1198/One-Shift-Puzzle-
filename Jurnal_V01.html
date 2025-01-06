@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V.01</title>
+    <style>
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #000;
+            color: #0f0; 
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+            height: 100vh; 
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8); 
+            border: 1px solid #0f0; 
+            border-radius: 10px;
+            box-shadow: 0 0 15px #0f0;
+            position: relative;
+        }
+
+        .date, .message, .signature {
+            font-size: 1em;
+            color: #0f0;
+            margin-bottom: 20px;
+            white-space: pre-line;
+            text-shadow: 0 0 5px #0f0;
+        }
+
+        #v-button {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #0f0;
+            text-transform: uppercase;
+        }
+
+        #v-button:hover {
+            background-color: #0f0;
+            color: #000;
+            box-shadow: 0 0 20px #0f0;
+        }
+
+        .glitch-effect {
+            animation: glitch-animation 2s steps(3, end) infinite;
+        }
+
+        @keyframes glitch-animation {
+            0% {
+                clip-path: inset(0% 0% 90% 0%);
+                transform: translate(2px, -2px);
+            }
+            25% {
+                clip-path: inset(10% 0% 80% 0%);
+                transform: translate(-2px, 2px);
+            }
+            50% {
+                clip-path: inset(20% 0% 70% 0%);
+                transform: translate(2px, -1px);
+            }
+            75% {
+                clip-path: inset(30% 0% 60% 0%);
+                transform: translate(-1px, 1px);
+            }
+            100% {
+                clip-path: inset(0% 0% 90% 0%);
+                transform: translate(1px, -2px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="date" class="date">00:07. Senin, 6 Januari</div>
+        <div id="message" class="message">
+            Hey :)<br>
+            Sempat aku berpikir untuk memakai Binatang Jalang. Namun apapun itu, kau pasti sanggup memecahkannya—masih menyukai puisi, bukan?<br>
+            Tak perlu lagi bertanya tentangku. Aku tak akan pernah menyukainya. Puisi, maksudku… Ah, kuharap kau mengerti.<br>
+            Maafkan aku. Kita tak bisa lagi berkomunikasi seperti biasa. Mereka mencariku. Melacak data, meretas enskripsi… Kau tahu maksudku.<br>
+            Aku telah keliru menilai mereka—lebih terorganisir dari yang kusangka. Dan kini, mereka sudah lebih dekat. Sejak itu, aku mulai mengkhawatirkanmu. Aku tak ingin mencelakaimu. Mereka bisa saja beralih padamu, menterormu, untuk menggali informasi tentangku. Aku tak ingin itu terjadi.<br>
+            Jangan salah sangka. Aku yakin kau tangguh, kau tak akan membocorkan tentang siapa diriku. Aku percaya padamu. Namun, ini lebih tentang komitmen. Aku akan selalu menjagamu tetap aman.<br>
+            Jangan khawatir tentangku. Kita akan terus berkabar. Dan kau akan tahu jejakku. Aku tak pernah melupakan matamu yang jeli. Kau sangat cermat. Itu yang membuatku yakin kita masih bisa terus berkomunikasi ;)<br>
+        </div>
+        <div id="signature" class="signature">— V</div>
+        <button id="v-button" onclick="window.location.href='https://example.com';">👁️</button>
+    </div>
+    <script>
+        setTimeout(() => {
+            const signature = document.getElementById("signature");
+            signature.style.display = "none";
+            const button = document.getElementById("v-button");
+            button.style.display = "block";
+
+            const date = document.getElementById("date");
+            const message = document.getElementById("message");
+            date.classList.add("glitch-effect");
+            message.classList.add("glitch-effect");
+
+            setTimeout(() => {
+                date.classList.remove("glitch-effect");
+                message.classList.remove("glitch-effect");
+            }, 2000);
+        }, 60000);
+    </script>
+</body>
+</html>
